@@ -37,3 +37,20 @@ input:focus{
     border-radius: 5px;
     outline-color: #5499C7;
 }
+main{
+    display: flex;
+    height: 70vh;
+    align-items: flex-end;
+    margin: 50px;
+    font-size: 30px;
+}
+main p{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    margin-right: 30px;
+}
+.current_weather i{
+    display: flex;
+    justify-content: center; 
+}
