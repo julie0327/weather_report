@@ -1,0 +1,39 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Consolas;
+    color: #1A5276;
+}
+body{
+    /* set the property of backround image */
+    background-image: url('./background.jpg'); 
+    background-size: cover;
+    background-size: 100% 100%;
+    background-attachment:fixed;
+    background-color:#CCCCCC;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+/* layout of header */
+header{
+    display: flex;
+    justify-content:space-between;
+    margin: 30px;
+}
+.navbar{
+    display: flex;
+    margin: 10px;
+}
+.material-icons{
+    font-size: 30px;
+}
+input{
+    background-color: transparent;
+    border-radius: 5px;
+    border-color: #1A5276;
+}
+input:focus{
+    background-color: transparent;
+    border-radius: 5px;
+    outline-color: #5499C7;
+}
