@@ -29,14 +29,29 @@ header{
 }
 input{
     background-color: transparent;
-    border-radius: 5px;
+    border-radius: 15px;
     border-color: #1A5276;
 }
 input:focus{
     background-color: transparent;
-    border-radius: 5px;
+    border-radius: 15px;
     outline-color: #5499C7;
 }
+button{
+    margin-left: 5px;
+    border-radius: 15px;
+    background-color: transparent;
+    width:35px;
+}
+button:active{
+    margin-left: 5px;
+    border-radius: 15px;
+    background-color: transparent;
+    width:35px;
+    border-color:#5499C7 ;
+}
+
+/* layout of main part */
 main{
     display: flex;
     height: 70vh;
