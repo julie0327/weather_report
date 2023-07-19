@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Consolas">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./style.css" />
     <title>Weather Report</title>
@@ -16,20 +16,32 @@
         <div class="navbar">
             <i class="material-icons">search</i>
             <input class='search' type="text" placeholder="Search..." />
-            <button>Go</button>
+            <button class="go">Go</button>
         </div>
     </header>
-    <main>
-        <p>16degree</p>
-        <section class="current_location">
-            <p>San Diego</p>
-            <p>current time</p>
-        </section>
-        <section class="current_weather">
-            <i class="material-icons">cloud</i>
-            <p>Cloudy</p>
-        </section>
-    </main>
+    <div class="wrapper">
+        <div class="left">
+            <p>16degree</p>
+            <section class="current_location">
+                <p>San Diego</p>
+                <p>current time</p>
+            </section>
+            <section class="current_weather">
+                <i class="material-icons">cloud</i>
+                <p>Cloudy</p>
+            </section>
+        </div>
+        <div class="right">
+            <ul class="weather_display">
+                <li>07/19/2023</li>
+                <li><i class="material-icons">cloud</i></li>
+                <li>Temp: 80 Degree</li>
+                <li>Wind: 3.94 MPH</li>
+                <li>Humidity: 63%</li>
+            </ul>
+        </div>
+    </div>
+
     <script src="./script.js"></script>
 </body>
 
