@@ -8,6 +8,7 @@ let botton = document.querySelector(".botton");
 
 let cityName = input.value;
 let APIKey = "aaa62c00179b2775dae73f49092440db";
+
 function getWeather(format, showplace) {
   var api = `https://api.openweathermap.org/data/2.5/weather?q=San Diego&units=imperial&appid=${APIKey}`;
   if (format) {
@@ -16,9 +17,17 @@ function getWeather(format, showplace) {
   fetch(api)
     .then((response) => response.json())
     .then(function (data) {
+      if (data.weather[0].main === "Clouds") {
+        data.weather[0].main = `<i class="material-icons">clouds</i>`;
+      } else if (data.weather[0].main === "Clear") {
+        data.weather[0].main = `<i class="material-icons">sunny</i>`;
+      } else if (data.weather[0].main === "rain") {
+        data.weather[0].main = `<i class="material-icons">rainy</i>`;
+      }
       showplace.innerHTML = `
                 <li>${dayjs().format("MM-DD-YYYY")}</li>
                 <li>City: ${data.name}</li>
+                <li>${data.weather[0].main}</li>
                 <li>Temp: ${data.main.temp} ℉</li>
                 <li>Wind: ${data.wind.speed} MPH</li>
                 <li>Humidity: ${data.main.humidity}%</li>
@@ -36,6 +45,12 @@ function forecastWeather() {
   )
     .then((response) => response.json())
     .then(function (data) {
+      console.log(data);
+      // if (data.weather[0].main === "Clouds") {
+      //   data.weather[0].main = `<i class="material-icons">clouds</i>`;
+      // } else if (data.weather[0].main === "Clear") {
+      //   data.weather[0].main = `<i class="material-icons">claer day</i>`;
+      // }
       botton.innerHTML = `
       <ul>
         <li>${data.list[0].dt_txt.replace("00:00:00", "")}</li>
