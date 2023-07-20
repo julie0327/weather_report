@@ -87,6 +87,9 @@ margin: 30px;
     border: 1px solid #3B6273;
     margin: 30px;
 }
-.weather_display{
-    display: none;
+/* .weather_display{
+    visibility: hidden;
+} */
+li{
+    list-style: none;
 }
