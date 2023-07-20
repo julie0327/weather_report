@@ -5,10 +5,7 @@ let weather_display = document.querySelector(".weather_display");
 let input=document.querySelector('.search')
 
 btn.addEventListener("click", function () {
-  right.appendChild(weather_display);
-  weather_display.innerHTML = `
-               ${getWeather()}
-  `
+  getWeather()
 });
 let cityName = input.value
 let APIKey='aaa62c00179b2775dae73f49092440db'
