@@ -39,6 +39,14 @@ function getWeather(format, showplace) {
 }
 getWeather("", left);
 
+function testLoop() {
+  let list = [0, 8, 16, 24, 32];
+  for (let i = 0; i < list.length; i++) {
+    console.log(list[i]);
+  }
+}
+console.log(testLoop());
+
 function forecastWeather() {
   fetch(
     `https://api.openweathermap.org/data/2.5/forecast?q=${input.value}&units=imperial&date=5&appid=${APIKey}`
@@ -46,48 +54,20 @@ function forecastWeather() {
     .then((response) => response.json())
     .then(function (data) {
       console.log(data);
-      // if (data.weather[0].main === "Clouds") {
-      //   data.weather[0].main = `<i class="material-icons">clouds</i>`;
-      // } else if (data.weather[0].main === "Clear") {
-      //   data.weather[0].main = `<i class="material-icons">claer day</i>`;
-      // }
-      botton.innerHTML = `
-      <ul>
-        <li>${data.list[0].dt_txt.replace("00:00:00", "")}</li>
-        <li>City: ${data.city.name}</li>
-        <li>Temp: ${data.list[0].main.temp} ℉</li>
-        <li>Wind: ${data.list[0].wind.speed} MPH</li>
-        <li>Humidity: ${data.list[0].main.humidity}%</li>
-      </ul>
-      <ul>
-        <li>${data.list[8].dt_txt.replace("00:00:00", "")}</li>
-        <li>City: ${data.city.name}</li>
-        <li>Temp: ${data.list[8].main.temp} ℉</li>
-        <li>Wind: ${data.list[8].wind.speed} MPH</li>
-        <li>Humidity: ${data.list[8].main.humidity}%</li>
-      </ul>
-      <ul>
-        <li>${data.list[16].dt_txt.replace("00:00:00", "")}</li>
-        <li>City: ${data.city.name}</li>
-        <li>Temp: ${data.list[16].main.temp} ℉</li>
-        <li>Wind: ${data.list[16].wind.speed} MPH</li>
-        <li>Humidity: ${data.list[16].main.humidity}%</li>
-      </ul>
-      <ul>
-        <li>${data.list[24].dt_txt.replace("00:00:00", "")}</li>
-        <li>City: ${data.city.name}</li>
-        <li>Temp: ${data.list[24].main.temp} ℉</li>
-        <li>Wind: ${data.list[24].wind.speed} MPH</li>
-        <li>Humidity: ${data.list[24].main.humidity}%</li>
-      </ul>
-      <ul>
-        <li>${data.list[32].dt_txt.replace("00:00:00", "")}</li>
-        <li>City: ${data.city.name}</li>
-        <li>Temp: ${data.list[32].main.temp} ℉</li>
-        <li>Wind: ${data.list[32].wind.speed} MPH</li>
-        <li>Humidity: ${data.list[32].main.humidity}%</li>
-      </ul>
-  `;
+      function loopweather() {
+        let list = [0, 8, 16, 24, 32];
+        for (let i = 0; i < list.length; i++) {
+          console.log(i);
+          botton.innerHTML += `<ul>
+          <li>${data.list[list[i]].dt_txt.replace("00:00:00", "")}</li>
+          <li>City: ${data.city.name}</li>
+          <li>Temp: ${data.list[i].main.temp} ℉</li>
+          <li>Wind: ${data.list[i].wind.speed} MPH</li>
+          <li>Humidity: ${data.list[i].main.humidity}%</li>
+        </ul>`;
+        }
+      }
+      loopweather();
     });
 }
 

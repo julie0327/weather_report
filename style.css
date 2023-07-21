@@ -18,7 +18,7 @@ body{
 header{
     display: flex;
     justify-content:space-between;
-    margin: 30px;
+    margin: 60px;
 }
 .navbar{
     display: flex;
@@ -79,9 +79,10 @@ button:active{
 }
 li{
     list-style: none;
+    font-size: 20px;
 }
 .botton{
-    height: 5vh;
+    height: 0vh;
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
