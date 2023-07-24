@@ -1,5 +1,5 @@
 let btn = document.querySelector(".go");
-let search = document.querySelector('.search')
+let search = document.querySelector(".search");
 let left = document.querySelector(".left");
 let wrapper = document.querySelector(".wrapper");
 let right = document.querySelector(".right");
@@ -9,18 +9,18 @@ let searchHistory = document.querySelector(".history");
 
 let cityName = input.value;
 let APIKey = "aaa62c00179b2775dae73f49092440db";
-getHistory()
+
 //get weather ICONS
 function getICONS(inputData) {
   if (inputData.weather[0].main === "Clouds") {
-        inputData.weather[0].main = '<i class="material-icons">clouds</i>';
-      } else if (inputData.weather[0].main === "Clear") {
-        inputData.weather[0].main = '<i class="material-icons">sunny</i>';
-      } else if (inputData.weather[0].main === "Rain") {
-        inputData.weather[0].main = '<i class="material-icons">Rainy</i>';
-      } else if (inputData.weather[0].main === "Haze") {
-        inputData.weather[0].main = '<i class="material-icons">dehaze</i>';
-      }
+    inputData.weather[0].main = '<i class="material-icons">clouds</i>';
+  } else if (inputData.weather[0].main === "Clear") {
+    inputData.weather[0].main = '<i class="material-icons">sunny</i>';
+  } else if (inputData.weather[0].main === "Rain") {
+    inputData.weather[0].main = '<i class="material-icons">Rainy</i>';
+  } else if (inputData.weather[0].main === "Haze") {
+    inputData.weather[0].main = '<i class="material-icons">dehaze</i>';
+  }
 }
 
 //get local weather and the place from the search box
@@ -32,7 +32,7 @@ function getWeather(format, showplace) {
   fetch(api)
     .then((response) => response.json())
     .then(function (data) {
-      getICONS(data)
+      getICONS(data);
       showplace.innerHTML = `
                 <li>${dayjs().format("MM-DD-YYYY")}</li>
                 <li>City: ${data.name}</li>
@@ -55,19 +55,23 @@ function forecastWeather() {
     .then((response) => response.json())
     .then(function (data) {
       console.log(data);
-      
+
       function loopweather() {
         let list = [0, 8, 16, 24, 32];
         for (let i = 0; i < list.length; i++) {
-              if (data.list[i].weather[0].main === "Clouds") {
-                data.list[i].weather[0].main = '<i class="material-icons">clouds</i>';
-            } else if (data.list[i].weather[0].main === "Clear") {
-                data.list[i].weather[0].main = '<i class="material-icons">sunny</i>';
-            } else if (data.list[i].weather[0].main === "Rain") {
-                data.list[i].weather[0].main = '<i class="material-icons">rainy</i>';
-            } else if (data.list[i].weather[0].main === "Haze") {
-                data.list[i].weather[0].main = '<i class="material-icons">dehaze</i>';
-            }
+          if (data.list[i].weather[0].main === "Clouds") {
+            data.list[i].weather[0].main =
+              '<i class="material-icons">clouds</i>';
+          } else if (data.list[i].weather[0].main === "Clear") {
+            data.list[i].weather[0].main =
+              '<i class="material-icons">sunny</i>';
+          } else if (data.list[i].weather[0].main === "Rain") {
+            data.list[i].weather[0].main =
+              '<i class="material-icons">thunderstorm</i>';
+          } else if (data.list[i].weather[0].main === "Haze") {
+            data.list[i].weather[0].main =
+              '<i class="material-icons">dehaze</i>';
+          }
           console.log(i);
           bottom.innerHTML += `
           <li>${data.list[list[i]].dt_txt.substring(0, 10)}</li>
@@ -82,21 +86,29 @@ function forecastWeather() {
       loopweather();
     });
 }
-function getHistory() { 
-  let cityName = JSON.parse(localStorage.getItem("getCityName"));
-  if (cityName || '') { 
-    searchHistory.innerHTML += `<li>${cityName.city}</li>`;
+
+let citydata = JSON.parse(localStorage.getItem("citydata")) || [];
+function getHistory() {
+  if (citydata) {
+    console.log(citydata.length);
+    searchHistory.innerHTML += `
+    <li>${citydata[citydata.length - 1]}</li>
+    `;
   }
+}
+// getHistory();
+function setHistory() {
+  let city = input.value;
+  citydata.push(city);
+  localStorage.setItem("data", JSON.stringify(citydata));
 }
 
 //click event that display the search result on the page
 btn.addEventListener("click", function () {
   // search.placeholder=''
-  bottom.textContent=''
+  bottom.textContent = "";
   getWeather(input.value, right);
   forecastWeather();
-  let getCityName = {city: input.value}
-  localStorage.setItem("getCityName", JSON.stringify(getCityName));
-  
-  getHistory()
+  setHistory();
+  getHistory();
 });
