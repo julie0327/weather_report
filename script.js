@@ -87,20 +87,25 @@ function forecastWeather() {
     });
 }
 
-let citydata = JSON.parse(localStorage.getItem("citydata")) || [];
+//keep the city after reload the page
 function getHistory() {
+  let citydata = JSON.parse(localStorage.getItem("citydata")) || [];
   if (citydata) {
-    console.log(citydata.length);
-    searchHistory.innerHTML += `
-    <li>${citydata[citydata.length - 1]}</li>
-    `;
+    for (let i = 0; i < citydata.length; i++) {
+      searchHistory.innerHTML += `
+      <li><a href=''>${citydata[i]}</a></li>
+      `;
+    }
   }
 }
-// getHistory();
-function setHistory() {
+getHistory();
+
+//save the city to localstorage
+function saveHistory() {
+  let citydata = JSON.parse(localStorage.getItem("citydata")) || [];
   let city = input.value;
   citydata.push(city);
-  localStorage.setItem("data", JSON.stringify(citydata));
+  localStorage.setItem("citydata", JSON.stringify(citydata));
 }
 
 //click event that display the search result on the page
@@ -109,6 +114,11 @@ btn.addEventListener("click", function () {
   bottom.textContent = "";
   getWeather(input.value, right);
   forecastWeather();
-  setHistory();
-  getHistory();
+  saveHistory();
+
+  //render the city from the localstorage on the page
+  let citydata = JSON.parse(localStorage.getItem("citydata")) || [];
+  searchHistory.innerHTML += `
+    <li>${citydata[citydata.length - 1]}</li>
+    `;
 });
