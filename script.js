@@ -1,13 +1,27 @@
 let btn = document.querySelector(".go");
+let search = document.querySelector('.search')
 let left = document.querySelector(".left");
 let wrapper = document.querySelector(".wrapper");
 let right = document.querySelector(".right");
 let input = document.querySelector(".search");
-let botton = document.querySelector(".botton");
-let searchHistory = document.querySelector("li");
+let bottom = document.querySelector(".bottom");
+let searchHistory = document.querySelector(".history");
 
 let cityName = input.value;
 let APIKey = "aaa62c00179b2775dae73f49092440db";
+getHistory()
+//get weather ICONS
+function getICONS(inputData) {
+  if (inputData.weather[0].main === "Clouds") {
+        inputData.weather[0].main = '<i class="material-icons">clouds</i>';
+      } else if (inputData.weather[0].main === "Clear") {
+        inputData.weather[0].main = '<i class="material-icons">sunny</i>';
+      } else if (inputData.weather[0].main === "Rain") {
+        inputData.weather[0].main = '<i class="material-icons">Rainy</i>';
+      } else if (inputData.weather[0].main === "Haze") {
+        inputData.weather[0].main = '<i class="material-icons">dehaze</i>';
+      }
+}
 
 //get local weather and the place from the search box
 function getWeather(format, showplace) {
@@ -18,13 +32,7 @@ function getWeather(format, showplace) {
   fetch(api)
     .then((response) => response.json())
     .then(function (data) {
-      if (data.weather[0].main === "Clouds") {
-        data.weather[0].main = `<i class="material-icons">clouds</i>`;
-      } else if (data.weather[0].main === "Clear") {
-        data.weather[0].main = `<i class="material-icons">sunny</i>`;
-      } else if (data.weather[0].main === "rain") {
-        data.weather[0].main = `<i class="material-icons">rainy</i>`;
-      }
+      getICONS(data)
       showplace.innerHTML = `
                 <li>${dayjs().format("MM-DD-YYYY")}</li>
                 <li>City: ${data.name}</li>
@@ -39,7 +47,7 @@ function getWeather(format, showplace) {
 }
 getWeather("", left);
 
-// get the weather forecast for the next 5 days
+//get the weather forecast for the next 5 days
 function forecastWeather() {
   fetch(
     `https://api.openweathermap.org/data/2.5/forecast?q=${input.value}&units=imperial&date=5&appid=${APIKey}`
@@ -47,41 +55,48 @@ function forecastWeather() {
     .then((response) => response.json())
     .then(function (data) {
       console.log(data);
+      
       function loopweather() {
         let list = [0, 8, 16, 24, 32];
         for (let i = 0; i < list.length; i++) {
+              if (data.list[i].weather[0].main === "Clouds") {
+                data.list[i].weather[0].main = '<i class="material-icons">clouds</i>';
+            } else if (data.list[i].weather[0].main === "Clear") {
+                data.list[i].weather[0].main = '<i class="material-icons">sunny</i>';
+            } else if (data.list[i].weather[0].main === "Rain") {
+                data.list[i].weather[0].main = '<i class="material-icons">rainy</i>';
+            } else if (data.list[i].weather[0].main === "Haze") {
+                data.list[i].weather[0].main = '<i class="material-icons">dehaze</i>';
+            }
           console.log(i);
-          botton.innerHTML += `<ul>
-          <li>${data.list[list[i]].dt_txt.replace("00:00:00", "")}</li>
+          bottom.innerHTML += `
+          <li>${data.list[list[i]].dt_txt.substring(0, 10)}</li>
           <li>City: ${data.city.name}</li>
+          <li>${data.list[i].weather[0].main}</li>
           <li>Temp: ${data.list[i].main.temp} ℉</li>
           <li>Wind: ${data.list[i].wind.speed} MPH</li>
           <li>Humidity: ${data.list[i].main.humidity}%</li>
-        </ul>`;
-          // var weather = {
-          //   date: data.list[list[i]].dt_txt.replace("00:00:00", ""),
-          //   city: data.city.name,
-          //   temp: data.list[i].main.temp,
-          //   wind: data.list[i].wind.speed,
-          //   humidity: data.list[i].main.humidity,
-          // };
-          // localStorage.setItem("weather", JSON.stringify(weather));
-
-          // let searchCity = {
-          //   cityname: input.value,
-          // };
-          // localStorage.setItem("searchCity", JSON.stringify(searchCity));
-          // let getHistory = JSON.parse(localStorage.getItem("searchCity"));
-          // wrapper.appendChild(searchHistory);
-          // searchHistory.innerHTML = getHistory.cityname;
+          `;
         }
       }
       loopweather();
     });
 }
+function getHistory() { 
+  let cityName = JSON.parse(localStorage.getItem("getCityName"));
+  if (cityName || '') { 
+    searchHistory.innerHTML += `<li>${cityName.city}</li>`;
+  }
+}
 
 //click event that display the search result on the page
 btn.addEventListener("click", function () {
+  // search.placeholder=''
+  bottom.textContent=''
   getWeather(input.value, right);
   forecastWeather();
+  let getCityName = {city: input.value}
+  localStorage.setItem("getCityName", JSON.stringify(getCityName));
+  
+  getHistory()
 });

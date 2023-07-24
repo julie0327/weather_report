@@ -53,42 +53,40 @@ button:active{
 
 /* layout of main part */
 .wrapper{
-    width: auto;
-    height: 100%;
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    margin: 50px;
+    /* margin-left: 50px; */
     flex-direction: column;
+    height: 80vh;
 }
 
 .left{
-    margin: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    font-size: 25px;
-    /* height: 30%; */
-    
+    margin: 50px;
+    display: inline;
+    font-size: 25px;  
 }
 .right{
-    margin: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+    margin: 50px;
+    display: inline;
     font-size: 25px;
 }
 li{
     list-style: none;
     font-size: 20px;
 }
-.botton{
-    height: 0vh;
+.bottom{
+    margin: 50px;
+
+    font-size: 25px;
+}
+.history{
+    margin-right: 150px;
     display: flex;
+    flex-direction: column;
     align-items: flex-end;
-    justify-content: flex-end;
-    flex-direction: row;
-    margin: 20px;
+    margin-top: 20px;
 }
-.botton ul{
-    margin: 10px;
-}
+
+
+
