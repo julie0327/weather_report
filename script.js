@@ -71,6 +71,11 @@ function forecastWeather() {
           } else if (data.list[i].weather[0].main === "Haze") {
             data.list[i].weather[0].main =
               '<i class="material-icons">dehaze</i>';
+          } else if (data.list[i].weather[0].main === "Mist") {
+            data.list[i].weather[0].main = '<i class="material-icons">mist</i>';
+          } else if (data.list[i].weather[0].main === "Snow") {
+            data.list[i].weather[0].main =
+              '<i class="material-icons">snowing</i>';
           }
           console.log(i);
           bottom.innerHTML += `
@@ -110,15 +115,17 @@ function saveHistory() {
 
 //click event that display the search result on the page
 btn.addEventListener("click", function () {
-  // search.placeholder=''
   bottom.textContent = "";
   getWeather(input.value, right);
   forecastWeather();
   saveHistory();
 
+  //clear the value in input box after submitting
+  search.value = "";
+
   //render the city from the localstorage on the page
   let citydata = JSON.parse(localStorage.getItem("citydata")) || [];
   searchHistory.innerHTML += `
-    <li>${citydata[citydata.length - 1]}</li>
+    <li><a href=''>${citydata[citydata.length - 1]}</a></li>
     `;
 });
