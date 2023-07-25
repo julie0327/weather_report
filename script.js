@@ -6,7 +6,6 @@ let right = document.querySelector(".right");
 let input = document.querySelector(".search");
 let bottom = document.querySelector(".bottom");
 let searchHistory = document.querySelector(".history");
-let btn=document.querySelectorAll('.btn')
 
 let cityName = input.value;
 let APIKey = "aaa62c00179b2775dae73f49092440db";
@@ -101,19 +100,18 @@ function getHistory() {
   if (citydata) {
     for (let i = 0; i < citydata.length; i++) {
       searchHistory.innerHTML += `
-      <li><button class='btn'>${citydata[i]}</button></li>
+      <li>${citydata[i]}</li>
       `;
-      // btn.forEach(function (e) { 
-      //   console.log(e);
-      // e.addEventListener('click', function () {
-      //     console.log(e);
-      //   })
-      // })
-      // 
-      
     }
+    //click history to show 5 days weather
+    let lis = document.querySelectorAll("li");
+    lis.forEach(function (theBtn, index) {
+      theBtn.addEventListener("click", function () {
+        bottom.innerHTML = "";
+        forecastWeather(citydata[index]);
+      });
+    });
   }
-  
 }
 getHistory();
 
@@ -138,15 +136,6 @@ go.addEventListener("click", function () {
   //render the city from the localstorage on the page
   let citydata = JSON.parse(localStorage.getItem("citydata")) || [];
   searchHistory.innerHTML += `
-    <li><button class='btn'>${citydata[citydata.length - 1]}</button></li>
+    <li>${citydata[citydata.length - 1]}</li>
     `;
-  
-  // for (let i = 0; i < citydata.length; i++) { 
-  //   btn.forEach(function (e) { 
-  //     e.addEventListener('click', function () {
-  //         console.log('!!!!!');
-  //       })
-  //     })
-  // }
-      
 });
