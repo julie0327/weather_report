@@ -79,12 +79,14 @@ function forecastWeather() {
           }
           console.log(i);
           bottom.innerHTML += `
+          <ul class='five_day_weather'>
           <li>${data.list[list[i]].dt_txt.substring(0, 10)}</li>
           <li>City: ${data.city.name}</li>
           <li>${data.list[i].weather[0].main}</li>
           <li>Temp: ${data.list[i].main.temp} ℉</li>
           <li>Wind: ${data.list[i].wind.speed} MPH</li>
           <li>Humidity: ${data.list[i].main.humidity}%</li>
+          </ul>
           `;
         }
       }
