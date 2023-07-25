@@ -1,4 +1,4 @@
-let btn = document.querySelector(".go");
+let go = document.querySelector(".go");
 let search = document.querySelector(".search");
 let left = document.querySelector(".left");
 let wrapper = document.querySelector(".wrapper");
@@ -6,6 +6,7 @@ let right = document.querySelector(".right");
 let input = document.querySelector(".search");
 let bottom = document.querySelector(".bottom");
 let searchHistory = document.querySelector(".history");
+let btn=document.querySelectorAll('.btn')
 
 let cityName = input.value;
 let APIKey = "aaa62c00179b2775dae73f49092440db";
@@ -48,9 +49,9 @@ function getWeather(format, showplace) {
 getWeather("", left);
 
 //get the weather forecast for the next 5 days
-function forecastWeather() {
+function forecastWeather(val) {
   fetch(
-    `https://api.openweathermap.org/data/2.5/forecast?q=${input.value}&units=imperial&date=5&appid=${APIKey}`
+    `https://api.openweathermap.org/data/2.5/forecast?q=${val}&units=imperial&date=5&appid=${APIKey}`
   )
     .then((response) => response.json())
     .then(function (data) {
@@ -100,10 +101,19 @@ function getHistory() {
   if (citydata) {
     for (let i = 0; i < citydata.length; i++) {
       searchHistory.innerHTML += `
-      <li><a href=''>${citydata[i]}</a></li>
+      <li><button class='btn'>${citydata[i]}</button></li>
       `;
+      // btn.forEach(function (e) { 
+      //   console.log(e);
+      // e.addEventListener('click', function () {
+      //     console.log(e);
+      //   })
+      // })
+      // 
+      
     }
   }
+  
 }
 getHistory();
 
@@ -116,10 +126,10 @@ function saveHistory() {
 }
 
 //click event that display the search result on the page
-btn.addEventListener("click", function () {
+go.addEventListener("click", function () {
   bottom.textContent = "";
   getWeather(input.value, right);
-  forecastWeather();
+  forecastWeather(input.value);
   saveHistory();
 
   //clear the value in input box after submitting
@@ -128,6 +138,15 @@ btn.addEventListener("click", function () {
   //render the city from the localstorage on the page
   let citydata = JSON.parse(localStorage.getItem("citydata")) || [];
   searchHistory.innerHTML += `
-    <li><a href=''>${citydata[citydata.length - 1]}</a></li>
+    <li><button class='btn'>${citydata[citydata.length - 1]}</button></li>
     `;
+  
+  // for (let i = 0; i < citydata.length; i++) { 
+  //   btn.forEach(function (e) { 
+  //     e.addEventListener('click', function () {
+  //         console.log('!!!!!');
+  //       })
+  //     })
+  // }
+      
 });
