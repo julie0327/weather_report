@@ -7,4 +7,4 @@
 * If you click on a city in the search history, you are again presented with current and future conditions for that city
 ## Deployment
 https://julie0327.github.io/weather_report/
-
+[]!
