@@ -110,8 +110,7 @@ function getHistory() {
     });
   }
 }
-getHistory();
-
+getHistory()
 //save the city to localstorage
 function saveHistory() {
   let citydata = JSON.parse(localStorage.getItem("citydata")) || [];
@@ -136,4 +135,14 @@ go.addEventListener("click", function () {
   searchHistory.innerHTML += `
     <li>${citydata[citydata.length - 1]}</li>
     `;
-});
+
+  let lis = document.querySelectorAll("li");
+    lis.forEach(function (theBtn, index) {
+      theBtn.addEventListener("click", function () {
+        console.log("!!!!!!");
+        bottom.innerHTML = "";
+        forecastWeather(citydata[index]);
+        getWeather(citydata[index])
+      });
+    });
+  });
