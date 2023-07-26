@@ -60,12 +60,7 @@ button:active{
     flex-direction: column;
     height: 70vh;
 }
-
-.left{
-    margin: 50px;
-    font-size: 25px;  
-}
-.right{
+.current{
     margin: 50px;
     font-size: 25px;
 }

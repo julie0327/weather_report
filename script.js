@@ -1,12 +1,10 @@
 let go = document.querySelector(".go");
 let search = document.querySelector(".search");
-let left = document.querySelector(".left");
 let wrapper = document.querySelector(".wrapper");
-let right = document.querySelector(".right");
+let current = document.querySelector(".current");
 let input = document.querySelector(".search");
 let bottom = document.querySelector(".bottom");
 let searchHistory = document.querySelector(".history");
-
 let cityName = input.value;
 let APIKey = "aaa62c00179b2775dae73f49092440db";
 
@@ -24,16 +22,16 @@ function getICONS(inputData) {
 }
 
 //get local weather and the place from the search box
-function getWeather(format, showplace) {
-  var api = `https://api.openweathermap.org/data/2.5/weather?q=San Diego&units=imperial&appid=${APIKey}`;
-  if (format) {
+function getWeather(format) {
+  // var api = `https://api.openweathermap.org/data/2.5/weather?q=San Diego&units=imperial&appid=${APIKey}`;
+  // if (format) {
     var api = `https://api.openweathermap.org/data/2.5/weather?q=${format}&units=imperial&appid=${APIKey}`;
-  }
+  //}
   fetch(api)
     .then((response) => response.json())
     .then(function (data) {
       getICONS(data);
-      showplace.innerHTML = `
+      current.innerHTML = `
                 <li>${dayjs().format("MM-DD-YYYY")}</li>
                 <li>City: ${data.name}</li>
                 <li>${data.weather[0].main}</li>
@@ -43,9 +41,7 @@ function getWeather(format, showplace) {
       `;
       console.log(data);
     })
-    .catch((err) => alert("Wrong city name!"));
 }
-getWeather("", left);
 
 //get the weather forecast for the next 5 days
 function forecastWeather(val) {
@@ -109,6 +105,7 @@ function getHistory() {
       theBtn.addEventListener("click", function () {
         bottom.innerHTML = "";
         forecastWeather(citydata[index]);
+        getWeather(citydata[index])
       });
     });
   }
@@ -125,8 +122,9 @@ function saveHistory() {
 
 //click event that display the search result on the page
 go.addEventListener("click", function () {
+  current.textContent = '';
   bottom.textContent = "";
-  getWeather(input.value, right);
+  getWeather(input.value);
   forecastWeather(input.value);
   saveHistory();
 
