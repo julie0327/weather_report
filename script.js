@@ -18,7 +18,9 @@ function getICONS(inputData) {
     inputData.weather[0].main = '<i class="material-icons">Rainy</i>';
   } else if (inputData.weather[0].main === "Haze") {
     inputData.weather[0].main = '<i class="material-icons">dehaze</i>';
-  }
+  } else if (inputData.weather[0].main === "Fog") {
+    inputData.weather[0].main = '<i class="material-icons">foggy</i>';
+  } 
 }
 
 //get local weather and the place from the search box
