@@ -15,25 +15,30 @@ function getICONS(inputData) {
   } else if (inputData.weather[0].main === "Clear") {
     inputData.weather[0].main = '<i class="material-icons">sunny</i>';
   } else if (inputData.weather[0].main === "Rain") {
-    inputData.weather[0].main = '<i class="material-icons">Rainy</i>';
+    inputData.weather[0].main = '<i class="material-icons">thunderstrom</i>';
   } else if (inputData.weather[0].main === "Haze") {
     inputData.weather[0].main = '<i class="material-icons">dehaze</i>';
   } else if (inputData.weather[0].main === "Fog") {
     inputData.weather[0].main = '<i class="material-icons">foggy</i>';
+  } else if (inputData.weather[0].main === "Mist") {
+    inputData.weather[0].main = '<span class="material-symbols-outlined">mist</span>';
   } 
 }
 
-//get local weather and the place from the search box
-function getWeather(format) {
-  // var api = `https://api.openweathermap.org/data/2.5/weather?q=San Diego&units=imperial&appid=${APIKey}`;
-  // if (format) {
-    var api = `https://api.openweathermap.org/data/2.5/weather?q=${format}&units=imperial&appid=${APIKey}`;
-  //}
+//get current weather that the place from the search box
+function getCurrentWeather(format){ 
+  var api = `https://api.openweathermap.org/data/2.5/weather?q=${format}&units=imperial&appid=${APIKey}`;
   fetch(api)
-    .then((response) => response.json())
-    .then(function (data) {
-      getICONS(data);
-      current.innerHTML = `
+    .then(function (response) {
+      if (!response.ok) {
+        alert ('Error: '+response.statusText)
+        } else { 
+        response.json().then(
+          function (data) { 
+           // saveHistory(data.name)
+            getICONS(data);
+      console.log(data);     
+        current.innerHTML = `
                 <li>${dayjs().format("MM-DD-YYYY")}</li>
                 <li>City: ${data.name}</li>
                 <li>${data.weather[0].main}</li>
@@ -41,7 +46,9 @@ function getWeather(format) {
                 <li>Wind: ${data.wind.speed} MPH</li>
                 <li>Humidity: ${data.main.humidity}%</li>
       `;
-      console.log(data);
+        console.log(data);
+        })
+      }
     })
 }
 
@@ -53,7 +60,6 @@ function forecastWeather(val) {
     .then((response) => response.json())
     .then(function (data) {
       console.log(data);
-
       function loopweather() {
         let list = [0, 8, 16, 24, 32];
         for (let i = 0; i < list.length; i++) {
@@ -107,27 +113,28 @@ function getHistory() {
       theBtn.addEventListener("click", function () {
         bottom.innerHTML = "";
         forecastWeather(citydata[index]);
-        getWeather(citydata[index])
+        getCurrentWeather(citydata[index])
       });
     });
   }
 }
 getHistory()
+
 //save the city to localstorage
-function saveHistory() {
-  let citydata = JSON.parse(localStorage.getItem("citydata")) || [];
-  let city = input.value;
-  citydata.push(city);
-  localStorage.setItem("citydata", JSON.stringify(citydata));
-}
+// function saveHistory(val) {
+//   let citydata = JSON.parse(localStorage.getItem("citydata")) || [];
+//   //let city = val;
+//   citydata.push(val);
+//   localStorage.setItem("citydata", JSON.stringify(citydata));
+// }
 
 //click event that display the search result on the page
 go.addEventListener("click", function () {
   current.textContent = '';
   bottom.textContent = "";
-  getWeather(input.value);
+  getCurrentWeather(input.value);
   forecastWeather(input.value);
-  saveHistory();
+  //saveHistory();
 
   //clear the value in input box after submitting
   search.value = "";
@@ -144,7 +151,7 @@ go.addEventListener("click", function () {
         console.log("!!!!!!");
         bottom.innerHTML = "";
         forecastWeather(citydata[index]);
-        getWeather(citydata[index])
+        getCurrentWeather(citydata[index])
       });
     });
   });

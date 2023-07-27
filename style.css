@@ -28,6 +28,7 @@ header{
     font-size: 30px;
 }
 input{
+    padding: 10px;
     background-color: transparent;
     border-radius: 15px;
     border-color: #1A5276;
