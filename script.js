@@ -21,23 +21,21 @@ function getICONS(inputData) {
   } else if (inputData.weather[0].main === "Fog") {
     inputData.weather[0].main = '<i class="material-icons">foggy</i>';
   } else if (inputData.weather[0].main === "Mist") {
-    inputData.weather[0].main = '<span class="material-symbols-outlined">mist</span>';
-  } 
+    inputData.weather[0].main =
+      '<span class="material-symbols-outlined">mist</span>';
+  }
 }
 
 //get current weather that the place from the search box
-function getCurrentWeather(format){ 
+function getCurrentWeather(format) {
   var api = `https://api.openweathermap.org/data/2.5/weather?q=${format}&units=imperial&appid=${APIKey}`;
-  fetch(api)
-    .then(function (response) {
-      if (!response.ok) {
-        alert ('Error: '+response.statusText)
-        } else { 
-        response.json().then(
-          function (data) { 
-           // saveHistory(data.name)
-            getICONS(data);
-      console.log(data);     
+  fetch(api).then(function (response) {
+    if (!response.ok) {
+      alert("Error: " + response.statusText);
+    } else {
+      response.json().then(function (data) {
+        getICONS(data);
+        console.log(data);
         current.innerHTML = `
                 <li>${dayjs().format("MM-DD-YYYY")}</li>
                 <li>City: ${data.name}</li>
@@ -47,9 +45,9 @@ function getCurrentWeather(format){
                 <li>Humidity: ${data.main.humidity}%</li>
       `;
         console.log(data);
-        })
-      }
-    })
+      });
+    }
+  });
 }
 
 //get the weather forecast for the next 5 days
@@ -113,28 +111,28 @@ function getHistory() {
       theBtn.addEventListener("click", function () {
         bottom.innerHTML = "";
         forecastWeather(citydata[index]);
-        getCurrentWeather(citydata[index])
+        getCurrentWeather(citydata[index]);
       });
     });
   }
 }
-getHistory()
+getHistory();
 
-//save the city to localstorage
-// function saveHistory(val) {
-//   let citydata = JSON.parse(localStorage.getItem("citydata")) || [];
-//   //let city = val;
-//   citydata.push(val);
-//   localStorage.setItem("citydata", JSON.stringify(citydata));
-// }
+// save the city to localstorage
+function saveHistory(val) {
+  let citydata = JSON.parse(localStorage.getItem("citydata")) || [];
+  //let city = val;
+  citydata.push(val);
+  localStorage.setItem("citydata", JSON.stringify(citydata));
+}
 
 //click event that display the search result on the page
 go.addEventListener("click", function () {
-  current.textContent = '';
+  current.textContent = "";
   bottom.textContent = "";
   getCurrentWeather(input.value);
   forecastWeather(input.value);
-  //saveHistory();
+  saveHistory(input.value);
 
   //clear the value in input box after submitting
   search.value = "";
@@ -146,12 +144,12 @@ go.addEventListener("click", function () {
     `;
 
   let lis = document.querySelectorAll("li");
-    lis.forEach(function (theBtn, index) {
-      theBtn.addEventListener("click", function () {
-        console.log("!!!!!!");
-        bottom.innerHTML = "";
-        forecastWeather(citydata[index]);
-        getCurrentWeather(citydata[index])
-      });
+  lis.forEach(function (theBtn, index) {
+    theBtn.addEventListener("click", function () {
+      console.log("!!!!!!");
+      bottom.innerHTML = "";
+      forecastWeather(citydata[index]);
+      getCurrentWeather(citydata[index]);
     });
   });
+});
